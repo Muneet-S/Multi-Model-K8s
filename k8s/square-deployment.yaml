@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: square-model
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: square-model
+  template:
+    metadata:
+      labels:
+        app: square-model
+    spec:
+      containers:
+      - name: square-container
+        image: square-model:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

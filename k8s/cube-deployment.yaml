@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cube-model
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cube-model
+  template:
+    metadata:
+      labels:
+        app: cube-model
+    spec:
+      containers:
+      - name: cube-container
+        image: cube-model:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
